@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🎉 Đăng Ký Tham Gia</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg: #0a0a1a;
+            --card: #12122a;
+            --gold: #f6c944;
+            --accent: #ff3c6f;
+            --accent2: #6c5ce7;
+            --text: #eee;
+            --dim: #888;
+            --success: #00e676;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Animated background orbs */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: 0;
+            animation: orbFloat 8s ease-in-out infinite alternate;
+        }
+
+        body::before {
+            width: 300px;
+            height: 300px;
+            background: var(--accent2);
+            top: -100px;
+            left: -80px;
+        }
+
+        body::after {
+            width: 250px;
+            height: 250px;
+            background: var(--accent);
+            bottom: -80px;
+            right: -60px;
+            animation-delay: -4s;
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(30px, -20px) scale(1.15);
+            }
+        }
+
+        .card {
+            position: relative;
+            z-index: 1;
+            max-width: 420px;
+            width: 100%;
+            background: var(--card);
+            border-radius: 24px;
+            padding: 40px 32px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        h1 {
+            font-family: 'Dela Gothic One', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--dim);
+            margin-bottom: 32px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-wrapper .icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            opacity: 0.5;
+        }
+
+        input {
+            width: 100%;
+            padding: 18px 20px 18px 48px;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text);
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-size: 1.05rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        input:focus {
+            border-color: var(--accent2);
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.15);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--accent2), var(--accent));
+            color: #fff;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 25px rgba(255, 60, 111, 0.3);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px rgba(255, 60, 111, 0.45);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn.loading {
+            pointer-events: none;
+        }
+
+        .btn.loading::after {
+            content: '';
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-msg {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-top: 14px;
+            display: none;
+            padding: 10px 16px;
+            background: rgba(255, 60, 111, 0.08);
+            border-radius: 10px;
+        }
+
+        .closed-msg {
+            display: none;
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(255, 60, 111, 0.08);
+            border-radius: 14px;
+            color: var(--accent);
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 60, 111, 0.15);
+        }
+
+        .count-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 24px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--dim);
+            font-size: 0.82rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .count-pill span {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        /* ===== SUCCESS VIEW ===== */
+        .success-view {
+            display: none;
+            text-align: center;
+            animation: successFade 0.5s ease;
+        }
+
+        @keyframes successFade {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .check-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 30px rgba(0, 230, 118, 0.3);
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .success-view h2 {
+            font-family: 'Dela Gothic One', sans-serif;
+            color: var(--success);
+            -webkit-text-fill-color: var(--success);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .success-view p {
+            color: var(--dim);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .success-name {
+            color: var(--gold) !important;
+            font-weight: 700;
+            font-size: 1.1rem !important;
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(18, 18, 42, 0.9);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .loading-overlay.hidden {
+            display: none;
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--accent2);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 12px;
+        }
+
+        .loading-overlay p {
+            color: var(--dim);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <!-- Loading state while Firebase connects -->
+        <div class="loading-overlay" id="loading">
+            <div class="loader"></div>
+            <p>Đang kết nối...</p>
+        </div>
+
+        <!-- Register form -->
+        <div id="form-view">
+            <div class="logo">🎉🧧🐴🧧🎉</div>
+            <h1>Quay số Lỳ Xì <br>Bính Ngọ 2026</h1>
+            <p class="subtitle">Mấy đứa nhập tên để tham gia</p>
+
+            <div class="input-wrapper">
+                <span class="icon">👤</span>
+                <input type="text" id="name-input" placeholder="Điền tên vào..." autocomplete="name">
+            </div>
+
+            <button class="btn" id="submit-btn" onclick="submitName()">
+                🎯 Đăng Ký Ngay!!!
+            </button>
+
+            <div class="error-msg" id="error-msg"></div>
+
+            <div class="closed-msg" id="closed-msg">
+                ⚠️ Đăng ký đã đóng.<br>Vui lòng liên hệ Viettran.
+            </div>
+
+            <div class="count-pill">
+                ✨ Đã có <span id="player-count">0</span> người đăng ký
+            </div>
+        </div>
+
+        <!-- Success view -->
+        <div class="success-view" id="success-view">
+            <div class="check-circle">✓</div>
+            <h2>Đăng ký thành công!</h2>
+            <p class="success-name" id="success-name"></p>
+            <p>Chúc anh em may mắn trong<br>phần quay số trúng thưởng! 🍀</p>
+        </div>
+    </div>
+
+    <!-- ============================================================
+     FIREBASE SDK
+     ============================================================ -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <script>
+        // ╔══════════════════════════════════════════════════════════╗
+        // ║     Đẩy thông tin FIREBASE vào đây.                      ║
+        // ╚══════════════════════════════════════════════════════════╝
+        const firebaseConfig = {
+            apiKey: "AIzaSyDAr7MvMi9iihmVskW3ydyZzxM43KHDDJk",
+            authDomain: "quay-so-trung-thuong-40f1b.firebaseapp.com",
+            databaseURL: "https://quay-so-trung-thuong-40f1b-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "quay-so-trung-thuong-40f1b",
+            storageBucket: "quay-so-trung-thuong-40f1b.firebasestorage.app",
+            messagingSenderId: "647358848820",
+            appId: "1:647358848820:web:1471d5e538881e86398f61",
+            measurementId: "G-LE5688273Q"
+        };
+
+        // ============================================================
+        //  Note - Đằng sau này không sửa nữa ngu vài lần thôi haha
+        // ============================================================
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        let regOpen = true;
+
+        // Listen for registration status
+        db.ref('settings/registrationOpen').on('value', snap => {
+            regOpen = snap.val() !== false; // default true
+            updateClosedState();
+        });
+
+        // Listen for player count
+        db.ref('players').on('value', snap => {
+            const data = snap.val();
+            const count = data ? Object.keys(data).length : 0;
+            document.getElementById('player-count').textContent = count;
+        });
+
+        // Hide loading when connected
+        db.ref('.info/connected').on('value', snap => {
+            if (snap.val() === true) {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        });
+
+        // Also hide loading after timeout in case
+        setTimeout(() => {
+            document.getElementById('loading').classList.add('hidden');
+        }, 3000);
+
+        function updateClosedState() {
+            const closed = document.getElementById('closed-msg');
+            const input = document.getElementById('name-input');
+            const btn = document.getElementById('submit-btn');
+
+            if (!regOpen) {
+                closed.style.display = 'block';
+                input.disabled = true;
+                btn.disabled = true;
+            } else {
+                closed.style.display = 'none';
+                input.disabled = false;
+                btn.disabled = false;
+            }
+        }
+
+        // Submit
+        document.getElementById('name-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') submitName();
+        });
+
+        async function submitName() {
+            const input = document.getElementById('name-input');
+            const name = input.value.trim();
+            const err = document.getElementById('error-msg');
+            err.style.display = 'none';
+
+            if (!name) {
+                err.textContent = '⚠️ Vui lòng nhập tên!';
+                err.style.display = 'block';
+                input.focus();
+                return;
+            }
+
+            if (name.length < 2) {
+                err.textContent = '⚠️ Tên quá ngắn, nhập lại đi!';
+                err.style.display = 'block';
+                return;
+            }
+
+            if (!regOpen) {
+                err.textContent = '⚠️ Đăng ký đã đóng!';
+                err.style.display = 'block';
+                return;
+            }
+
+            const btn = document.getElementById('submit-btn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+            btn.innerHTML = 'Đang đăng ký... ';
+
+            try {
+                await db.ref('players').push({
+                    name: name,
+                    time: firebase.database.ServerValue.TIMESTAMP
+                });
+
+                // Show success
+                document.getElementById('form-view').style.display = 'none';
+                document.getElementById('success-name').textContent = '🎊 ' + name;
+                document.getElementById('success-view').style.display = 'block';
+
+            } catch (e) {
+                err.textContent = '❌ Lỗi kết nối! Vui lòng thử lại.';
+                err.style.display = 'block';
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                btn.innerHTML = '🎯 Đăng Ký Ngay';
+            }
+        }
+    </script>
+</body>
+
+</html>
